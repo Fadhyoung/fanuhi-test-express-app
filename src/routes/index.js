@@ -1,5 +1,6 @@
 const express = require('express');
-const { getMovies } = require('../controllers/movie.controller');
+const { getMovies, createMovie, updateMovie, deleteMovie } = require('../controllers/movie.controller');
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -7,5 +8,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/movies', getMovies);
+router.post('/movies', createMovie);
+router.put('/movies/:id', updateMovie);
+router.delete('/movies/:id', deleteMovie);
 
 module.exports = router;

@@ -1,18 +1,41 @@
-const Movie = require('../models/movie.model');
+const movieService = require('../services/movie.service');
 
 exports.getMovies = async (req, res) => {
     try {
-        const { title, year, genre, rated } = req.query;
-
-        let filter = {};
-        if (title) filter.title = new RegExp(title, "i");
-        if (year) filter.year = Number(year);
-        if (genre) filter.genres = genre;
-        if (rated) filter.rated = rated;
-
-        const movies = await Movie.find(filter).limit(10);
+        const filters = req.query;
+        const movies = await movieService.getMovies(filters);
+        console.log(movies)
         res.json(movies);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch movies" });
+    }
+};
+
+exports.createMovie = async (req, res) => {
+    try {
+        const newMovie = await movieService.createMovie(req.body);
+        res.status(201).json(newMovie);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to create movie" });
+    }
+};
+
+exports.updateMovie = async (req, res) => {
+    try {
+        const updatedMovie = await movieService.updateMovie(req.params.id, req.body);
+        if (!updatedMovie) return res.status(404).json({ error: "Movie not found" });
+        res.json(updatedMovie);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update movie" });
+    }
+};
+
+exports.deleteMovie = async (req, res) => {
+    try {
+        const deletedMovie = await movieService.deleteMovie(req.params.id);
+        if (!deletedMovie) return res.status(404).json({ error: "Movie not found" });
+        res.json({ message: "Movie deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete movie" });
     }
 };
