@@ -1,18 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-    Title: String,
-    OriginalTitle: String,
-    URL: String,
-    TitleType: String,
-    IMDbRating: Number,
-    Runtime: String,
-    Year: Number,
-    Genres: String,
-    NumVotes: Number,
-    ReleaseDate: String,
-    Directors: String
+    _id: String,
+    const: String,
+    yourRating: Number,
+    dateRated: String,
+    title: String,
+    originalTitle: String,
+    poster: String,
+    url: String,
+    titleType: String,
+    imdbRating: Number,
+    runtime: String,
+    year: Number,
+    genres: String,
+    numVotes: Number,
+    releaseDate: String,
+    directors: String
 });
 
-const Movie = mongoose.model('Movie', movieSchema, 'movies'); // 'movies' is the collection name in sample_mflix
+const Movie = mongoose.model("Movie", movieSchema, "movies");
 module.exports = Movie;
