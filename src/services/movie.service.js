@@ -15,12 +15,10 @@ exports.createMovie = async (movieData) => {
 };
 
 exports.updateMovie = async (id, movieData) => {
-    const updatedMovie = await Movie.findOneAndUpdate({ const: id }, movieData, { new: true });
-    
-    return updatedMovie
+    return await Movie.findOneAndUpdate({ const: id }, movieData, { new: true });
 };
 
 
 exports.deleteMovie = async (id) => {
-    return await Movie.findByIdAndDelete(id);
+    return await Movie.findOneAndDelete({const: id});
 };
