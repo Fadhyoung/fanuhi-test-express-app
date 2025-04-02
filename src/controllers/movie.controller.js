@@ -4,7 +4,6 @@ exports.getMovies = async (req, res) => {
     try {
         const filters = req.query;
         const movies = await movieService.getMovies(filters);
-        console.log(movies)
         res.json(movies);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch movies" });
@@ -12,10 +11,13 @@ exports.getMovies = async (req, res) => {
 };
 
 exports.createMovie = async (req, res) => {
+    console.log(req.body)
     try {
         const newMovie = await movieService.createMovie(req.body);
+        console.log("data updated")
         res.status(201).json(newMovie);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Failed to create movie" });
     }
 };
@@ -36,6 +38,7 @@ exports.deleteMovie = async (req, res) => {
         if (!deletedMovie) return res.status(404).json({ error: "Movie not found" });
         res.json({ message: "Movie deleted successfully" });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Failed to delete movie" });
     }
 };
